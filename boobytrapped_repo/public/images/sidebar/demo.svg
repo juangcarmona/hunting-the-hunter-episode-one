@@ -1,0 +1,25 @@
+<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <g fill="white">
+    <!-- Wand handle with decorative pattern -->
+    <rect x="45" y="30" width="10" height="50" rx="2" ry="2" />
+    <circle cx="50" cy="35" r="5" />
+    <circle cx="50" cy="45" r="4" />
+    <circle cx="50" cy="55" r="3" />
+    <circle cx="50" cy="65" r="2" />
+
+    <!-- Wand star -->
+    <polygon points="50,10 54,24 68,24 56,32 60,46 50,38 40,46 44,32 32,24 46,24" />
+
+    <!-- Larger sparkles -->
+    <polygon points="20,15 22,22 29,22 23,26 25,33 20,28 15,33 17,26 11,22 18,22" />
+    <polygon points="80,15 82,22 89,22 83,26 85,33 80,28 75,33 77,26 71,22 78,22" />
+    <polygon points="70,45 72,50 78,50 73,53 75,60 70,55 65,60 67,53 61,50 68,50" />
+    <polygon points="30,65 32,70 38,70 33,73 35,80 30,75 25,80 27,73 21,70 28,70" />
+
+    <!-- Smaller sparkles -->
+    <circle cx="10" cy="30" r="1.5" />
+    <circle cx="90" cy="40" r="1.5" />
+    <circle cx="80" cy="80" r="1.5" />
+    <circle cx="20" cy="90" r="1.5" />
+  </g>
+</svg>

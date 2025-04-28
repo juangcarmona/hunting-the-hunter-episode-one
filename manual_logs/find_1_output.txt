@@ -1,0 +1,22 @@
+azureuser@reverse-node-sandbox:~$ find ~ -type f -printf '%T@ %p\n' | sort -n | tail -n 20
+1745327594.2618095260 /home/azureuser/.vscode/node_modules/ajv/lib/dot/not.jst
+1745327594.2638095280 /home/azureuser/.vscode/node_modules/ajv/lib/dot/oneOf.jst
+1745327594.2658095300 /home/azureuser/.vscode/node_modules/ajv/lib/dot/pattern.jst
+1745327594.2688095320 /home/azureuser/.vscode/node_modules/ajv/lib/dot/properties.jst
+1745327594.2728095350 /home/azureuser/.vscode/node_modules/ajv/lib/dot/propertyNames.jst
+1745327594.2768095390 /home/azureuser/.vscode/node_modules/ajv/lib/dot/ref.jst
+1745327594.2808095420 /home/azureuser/.vscode/node_modules/ajv/lib/dot/required.jst
+1745327594.2838095440 /home/azureuser/.vscode/node_modules/ajv/lib/dot/uniqueItems.jst
+1745327594.2848095450 /home/azureuser/.vscode/node_modules/ajv/lib/dot/validate.jst
+1745327594.2928095520 /home/azureuser/.vscode/node_modules/ajv/dist/ajv.min.js.map
+1745327594.2928095520 /home/azureuser/.vscode/node_modules/ajv/lib/dotjs/README.md
+1745327594.2998095570 /home/azureuser/.vscode/node_modules/ajv/README.md
+1745327594.3058095620 /home/azureuser/.vscode/node_modules/ajv/lib/ajv.d.ts
+1745327594.3088095650 /home/azureuser/.vscode/node_modules/ajv/scripts/.eslintrc.yml
+1745327594.3798096230 /home/azureuser/.vscode/package-lock.json
+1745327594.4028096420 /home/azureuser/.vscode/node_modules/.package-lock.json
+1745327594.4328096670 /home/azureuser/.npm/_logs/2025-04-22T13_13_10_607Z-debug-0.log
+1745327595.4548105070 /home/azureuser/.npl
+1745327604.4318206550 /home/azureuser/fs-watch.log
+1745327849.1529805690 /home/azureuser/capture.pcap
+azureuser@reverse-node-sandbox:~$

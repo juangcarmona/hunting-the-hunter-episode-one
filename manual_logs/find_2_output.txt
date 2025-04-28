@@ -1,0 +1,40 @@
+azureuser@reverse-node-sandbox:~$ find ~/.config ~/.vscode ~/.local /tmp -type f -printf '%T@ %p\n' | sort -n | tail -n 30
+find: ‘/home/azureuser/.local’: No such file or directory
+find: ‘/tmp/systemd-private-2daf7759fbfd47f69f667a2d9479074a-systemd-resolved.service-cEiIzV’: Permission denied
+find: ‘/tmp/snap-private-tmp’: Permission denied
+find: ‘/tmp/systemd-private-2daf7759fbfd47f69f667a2d9479074a-fwupd.service-0elpel’: Permission denied
+find: ‘/tmp/systemd-private-2daf7759fbfd47f69f667a2d9479074a-systemd-logind.service-mx9S78’: Permission denied
+find: ‘/tmp/systemd-private-2daf7759fbfd47f69f667a2d9479074a-polkit.service-UALa7u’: Permission denied
+find: ‘/tmp/systemd-private-2daf7759fbfd47f69f667a2d9479074a-ModemManager.service-ebXnoG’: Permission denied
+find: ‘/tmp/systemd-private-2daf7759fbfd47f69f667a2d9479074a-chrony.service-kKxz8b’: Permission denied
+1745327594.2458095130 /home/azureuser/.vscode/node_modules/ajv/lib/dot/_limitLength.jst
+1745327594.2468095140 /home/azureuser/.vscode/node_modules/ajv/lib/dot/_limitProperties.jst
+1745327594.2498095160 /home/azureuser/.vscode/node_modules/ajv/lib/dot/allOf.jst
+1745327594.2508095170 /home/azureuser/.vscode/node_modules/ajv/lib/dot/anyOf.jst
+1745327594.2518095180 /home/azureuser/.vscode/node_modules/ajv/lib/dot/comment.jst
+1745327594.2518095180 /home/azureuser/.vscode/node_modules/ajv/lib/dot/const.jst
+1745327594.2518095180 /home/azureuser/.vscode/node_modules/ajv/lib/dot/contains.jst
+1745327594.2528095190 /home/azureuser/.vscode/node_modules/ajv/lib/dot/custom.jst
+1745327594.2528095190 /home/azureuser/.vscode/node_modules/ajv/lib/dot/dependencies.jst
+1745327594.2528095190 /home/azureuser/.vscode/node_modules/ajv/lib/dot/enum.jst
+1745327594.2528095190 /home/azureuser/.vscode/node_modules/ajv/lib/dot/format.jst
+1745327594.2528095190 /home/azureuser/.vscode/node_modules/ajv/lib/dot/if.jst
+1745327594.2538095200 /home/azureuser/.vscode/node_modules/ajv/lib/dot/items.jst
+1745327594.2588095240 /home/azureuser/.vscode/node_modules/ajv/lib/dot/multipleOf.jst
+1745327594.2618095260 /home/azureuser/.vscode/node_modules/ajv/lib/dot/not.jst
+1745327594.2638095280 /home/azureuser/.vscode/node_modules/ajv/lib/dot/oneOf.jst
+1745327594.2658095300 /home/azureuser/.vscode/node_modules/ajv/lib/dot/pattern.jst
+1745327594.2688095320 /home/azureuser/.vscode/node_modules/ajv/lib/dot/properties.jst
+1745327594.2728095350 /home/azureuser/.vscode/node_modules/ajv/lib/dot/propertyNames.jst
+1745327594.2768095390 /home/azureuser/.vscode/node_modules/ajv/lib/dot/ref.jst
+1745327594.2808095420 /home/azureuser/.vscode/node_modules/ajv/lib/dot/required.jst
+1745327594.2838095440 /home/azureuser/.vscode/node_modules/ajv/lib/dot/uniqueItems.jst
+1745327594.2848095450 /home/azureuser/.vscode/node_modules/ajv/lib/dot/validate.jst
+1745327594.2928095520 /home/azureuser/.vscode/node_modules/ajv/dist/ajv.min.js.map
+1745327594.2928095520 /home/azureuser/.vscode/node_modules/ajv/lib/dotjs/README.md
+1745327594.2998095570 /home/azureuser/.vscode/node_modules/ajv/README.md
+1745327594.3058095620 /home/azureuser/.vscode/node_modules/ajv/lib/ajv.d.ts
+1745327594.3088095650 /home/azureuser/.vscode/node_modules/ajv/scripts/.eslintrc.yml
+1745327594.3798096230 /home/azureuser/.vscode/package-lock.json
+1745327594.4028096420 /home/azureuser/.vscode/node_modules/.package-lock.json
+azureuser@reverse-node-sandbox:~$
