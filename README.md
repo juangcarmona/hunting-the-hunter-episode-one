@@ -1,4 +1,4 @@
-# Hunting the Hunter — Episode One 🕵️‍♂️
+# Hunting the Hunter Episode One 🕵️‍♂️
 
 This repository contains the full forensic dossier and technical breakdown of a malware campaign detected in April 2025, disguised as a fake job offer from someone impersonating a Wov Labs representative.
 
