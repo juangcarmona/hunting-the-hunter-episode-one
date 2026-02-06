@@ -1,0 +1,59 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "lab-01: Static Analysis",
+      "type": "shell",
+      "command": "python3",
+      "args": ["${workspaceFolder}/labs/lab-01-static-analysis/scripts/analyze_structure.py"],
+      "group": {"kind": "build", "isDefault": false},
+      "presentation": {"reveal": "always", "panel": "new"},
+      "problemMatcher": []
+    },
+    {
+      "label": "lab-02: Config Deobfuscation",
+      "type": "shell",
+      "command": "python3",
+      "args": ["${workspaceFolder}/labs/lab-02-config-deobfuscation/scripts/analyze_obfuscated.py"],
+      "group": {"kind": "build", "isDefault": false},
+      "presentation": {"reveal": "always", "panel": "new"},
+      "problemMatcher": []
+    },
+    {
+      "label": "lab-03: Network Reconstruction",
+      "type": "shell",
+      "command": "python3",
+      "args": ["${workspaceFolder}/labs/lab-03-network-reconstruction/scripts/analyze_traffic.py"],
+      "group": {"kind": "build", "isDefault": false},
+      "presentation": {"reveal": "always", "panel": "new"},
+      "problemMatcher": []
+    },
+    {
+      "label": "lab-04: Payload Investigation",
+      "type": "shell",
+      "command": "python3",
+      "args": ["${workspaceFolder}/labs/lab-04-payload-investigation/scripts/analyze_npl.py"],
+      "group": {"kind": "build", "isDefault": false},
+      "presentation": {"reveal": "always", "panel": "new"},
+      "problemMatcher": []
+    },
+    {
+      "label": "lab-05: Forensic Scripts",
+      "type": "shell",
+      "command": "python3",
+      "args": ["${workspaceFolder}/labs/lab-05-forensic-scripts/scripts/inventory_scripts.py"],
+      "group": {"kind": "build", "isDefault": false},
+      "presentation": {"reveal": "always", "panel": "new"},
+      "problemMatcher": []
+    },
+    {
+      "label": "lab-06: IP Reconnaissance",
+      "type": "shell",
+      "command": "python3",
+      "args": ["${workspaceFolder}/labs/lab-06-ip-reconnaissance/scripts/gather_ip_intel.py"],
+      "group": {"kind": "build", "isDefault": false},
+      "presentation": {"reveal": "always", "panel": "new"},
+      "problemMatcher": []
+    }
+  ]
+}
