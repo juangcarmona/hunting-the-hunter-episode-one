@@ -16,6 +16,38 @@
       "program": "${workspaceFolder}/labs/lab-02-url-reconstruction/extract_c2_url_parts.py",
       "console": "integratedTerminal",
       "justMyCode": true
+    },
+    {
+      "name": "03 Decode Payload 1",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/labs/lab-04/decode_payload_1.py",
+      "console": "integratedTerminal",
+      "justMyCode": true
+    },
+    {
+      "name": "04 Analyze Layer 1",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/labs/lab-05/analyze_layer1_payload.py",
+      "console": "integratedTerminal",
+      "justMyCode": true
+    },
+    {
+      "name": "05 Extract Layer 1 Payload",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/labs/lab-05/extract_layer1_payload.py",
+      "console": "integratedTerminal",
+      "justMyCode": true
+    },
+    {
+      "name": "06 Extract Layer 2 Payload",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/labs/lab-05/extract_layer2_payload.py",
+      "console": "integratedTerminal",
+      "justMyCode": true
     }
   ]
 }
