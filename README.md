@@ -24,7 +24,7 @@ This attack proves how far malicious actors are willing to go, building convinci
 4. **Payload Trigger**: Obfuscated code inside `next.config.js` designed to generate a `.npl` file and initiate C2 communications.
 
 📄 **Conversation Details**:
-- **Key moments** are captured as screenshots in [`screenshots/`](screenshots/) (`conv_001.png` to `conv_004.png`).
+- **Key moments** are captured as screenshots in [`assets/screenshots/`](assets/screenshots/) (`conv_001.png` to `conv_004.png`).
 - **The full conversation transcript** is available in [`conversation/linkedin_chat_with_elian.md`](conversation/linkedin_chat_with_elian.md).
 
 ---
@@ -35,7 +35,7 @@ This attack proves how far malicious actors are willing to go, building convinci
 - `conversation/`: Full transcript of the LinkedIn conversation.
 - `manual_logs/`: CLI command outputs during forensic session (`find`, `tshark`, etc.).
 - `pcap_logs/`: Captured network traffic (`capture.pcap`).
-- `screenshots/`: Screenshots documenting conversation and VM behavior.
+- `assets/screenshots/`: Screenshots documenting conversation and VM behavior.
 - `tools/forensic_scripts/`: Python scripts and a Docker forensic environment.
 
 ---

@@ -24,7 +24,7 @@ Este ataque demuestra hasta dónde están dispuestos a llegar los actores malici
 4. **Activación del Payload**: Código ofuscado dentro de `next.config.js` diseñado para generar un archivo `.npl` e iniciar comunicaciones con C2.
 
 📄 **Detalles de la Conversación**:
-- **Momentos clave** capturados en [`screenshots/`](screenshots/) (`conv_001.png` a `conv_004.png`).
+- **Momentos clave** capturados en [`assets/screenshots/`](assets/screenshots/) (`conv_001.png` a `conv_004.png`).
 - **Transcripción completa** disponible en [`conversation/linkedin_chat_with_elian.md`](conversation/linkedin_chat_with_elian.md).
 
 ---
@@ -35,7 +35,7 @@ Este ataque demuestra hasta dónde están dispuestos a llegar los actores malici
 - `conversation/`: Transcripción completa de la conversación en LinkedIn.
 - `manual_logs/`: Salida de comandos CLI durante la sesión forense (`find`, `tshark`, etc.).
 - `pcap_logs/`: Tráfico de red capturado (`capture.pcap`).
-- `screenshots/`: Capturas documentando conversación y actividad en la VM.
+- `assets/screenshots/`: Capturas documentando conversación y actividad en la VM.
 - `tools/forensic_scripts/`: Scripts en Python y entorno forense en Docker.
 
 ---

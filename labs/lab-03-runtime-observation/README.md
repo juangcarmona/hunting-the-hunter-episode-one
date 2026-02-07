@@ -86,7 +86,7 @@ npm install
 npm run dev
 ```
 
-![Running the trap!](../../screenshots/vm_001.png)
+![Running the trap!](../../assets/screenshots/vm_001.png)
 
 ---
 
