@@ -48,6 +48,14 @@
       "program": "${workspaceFolder}/labs/lab-05/extract_layer2_payload.py",
       "console": "integratedTerminal",
       "justMyCode": true
+    },
+    {
+      "name": "07 Recursive Extraction",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/labs/lab-06/recursive_decoder.py",
+      "console": "integratedTerminal",
+      "justMyCode": true
     }
   ]
 }
