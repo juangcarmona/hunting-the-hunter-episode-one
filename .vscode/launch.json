@@ -2,50 +2,18 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Python: Lab 01 Static Analysis",
+      "name": "01 URL Reconstruction...",
       "type": "debugpy",
       "request": "launch",
-      "program": "${workspaceFolder}/labs/lab-01-static-analysis/scripts/analyze_structure.py",
+      "program": "${workspaceFolder}/labs/lab-02-url-reconstruction/reconstruct_payload_url_logic.py",
       "console": "integratedTerminal",
       "justMyCode": true
     },
     {
-      "name": "Python: Lab 02 Config Deobfuscation",
+      "name": "02 Extract C2 URLs",
       "type": "debugpy",
       "request": "launch",
-      "program": "${workspaceFolder}/labs/lab-02-config-deobfuscation/scripts/analyze_obfuscated.py",
-      "console": "integratedTerminal",
-      "justMyCode": true
-    },
-    {
-      "name": "Python: Lab 03 Network Reconstruction",
-      "type": "debugpy",
-      "request": "launch",
-      "program": "${workspaceFolder}/labs/lab-03-network-reconstruction/scripts/analyze_traffic.py",
-      "console": "integratedTerminal",
-      "justMyCode": true
-    },
-    {
-      "name": "Python: Lab 04 Payload Investigation",
-      "type": "debugpy",
-      "request": "launch",
-      "program": "${workspaceFolder}/labs/lab-04-payload-investigation/scripts/analyze_npl.py",
-      "console": "integratedTerminal",
-      "justMyCode": true
-    },
-    {
-      "name": "Python: Lab 05 Forensic Scripts",
-      "type": "debugpy",
-      "request": "launch",
-      "program": "${workspaceFolder}/labs/lab-05-forensic-scripts/scripts/inventory_scripts.py",
-      "console": "integratedTerminal",
-      "justMyCode": true
-    },
-    {
-      "name": "Python: Lab 06 IP Reconnaissance",
-      "type": "debugpy",
-      "request": "launch",
-      "program": "${workspaceFolder}/labs/lab-06-ip-reconnaissance/scripts/gather_ip_intel.py",
+      "program": "${workspaceFolder}/labs/lab-02-url-reconstruction/extract_c2_url_parts.py",
       "console": "integratedTerminal",
       "justMyCode": true
     }
