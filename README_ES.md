@@ -1,114 +1,131 @@
 # Hunting the Hunter — Episodio Uno 🕵️‍♂️
 
-Este repositorio contiene el expediente forense completo y el desglose técnico de una campaña de malware detectada en abril de 2025, disfrazada como una oferta de trabajo falsa de alguien que se hacía pasar por un representante de Wov Labs.
+
+Presentado en **RootedCON Madrid** (track AI&SEC), el 5 de marzo de 2026.
+Este repositorio reúne la parte práctica y educativa de esa charla: cómo una falsa oferta laboral llevó a un repositorio malicioso y cómo investigarlo de forma segura, paso a paso.
+
+![Presentación RootedCON 2026](assets/rooted.png)
 
 🔗 [English Version](README.md)
 
 ---
 
-## 🎯 Contexto
+## 🎯 Por qué existe este repositorio
 
-Como desarrolladores, somos objetivos cada vez más valiosos.
-Manejamos secretos, tenemos acceso privilegiado a entornos de producción, código fuente, bases de datos críticas e infraestructura en la nube.
-No solo somos constructores, también somos puertas de entrada.
-
-Este ataque demuestra hasta dónde están dispuestos a llegar los actores maliciosos, creando perfiles falsos convincentes, ofreciendo "trabajos soñados" y utilizando cebos técnicos sofisticados para comprometer a ingenieros.
+Como desarrolladores somos objetivos de alto valor: manejamos secretos, accesos a infraestructura, credenciales de producción y código fuente. Este proyecto documenta una investigación real para que otros profesionales puedan reproducir el proceso de threat hunting de forma controlada y segura.
 
 ---
 
-## 📢 Flujo del Ataque
+## 📚 Qué vas a encontrar aquí
 
-1. **Contacto Inicial**: Un mensaje en LinkedIn de "Elian Pérez" ofreciendo un puesto de Technical Manager muy bien remunerado.
-2. **Ingeniería Social**: Creación de urgencia mencionando presupuestos de \$3M, plazos de MVP y necesidad de contratar equipos sénior.
-3. **Repositorio Malicioso**: Enlace a un repositorio de Bitbucket disfrazado como base de código de proyecto.
-4. **Activación del Payload**: Código ofuscado dentro de `next.config.js` diseñado para generar un archivo `.npl` e iniciar comunicaciones con C2.
+- `boobytrapped_repo/`: snapshot del proyecto sospechoso usado durante la investigación.
+- `conversation/`: transcripción y contexto de ingeniería social en LinkedIn.
+- `labs/`: investigación dividida en 7 laboratorios prácticos.
+- `pcap_logs/`: capturas de red y artefactos de tráfico.
+- `assets/screenshots/`: evidencias visuales de la conversación y la VM (`conv_001.png` a `conv_004.png`).
 
-📄 **Detalles de la Conversación**:
-- **Momentos clave** capturados en [`assets/screenshots/`](assets/screenshots/) (`conv_001.png` a `conv_004.png`).
-- **Transcripción completa** disponible en [`conversation/linkedin_chat_with_elian.md`](conversation/linkedin_chat_with_elian.md).
-
----
-
-## 📀 Estructura del Repositorio
-
-- `boobytrapped_repo/`: Copia completa del repositorio malicioso de Bitbucket.
-- `conversation/`: Transcripción completa de la conversación en LinkedIn.
-- `manual_logs/`: Salida de comandos CLI durante la sesión forense (`find`, `tshark`, etc.).
-- `pcap_logs/`: Tráfico de red capturado (`capture.pcap`).
-- `assets/screenshots/`: Capturas documentando conversación y actividad en la VM.
-- `tools/forensic_scripts/`: Scripts en Python y entorno forense en Docker.
+📄 Referencias clave:
+- Capturas de conversación: [`assets/screenshots/`](assets/screenshots/)
+- Transcripción completa: [`conversation/linkedin_chat_with_elian.md`](conversation/linkedin_chat_with_elian.md)
 
 ---
 
-## 📈 Análisis Manual de Logs
+## 🧭 Historia en 7 pasos (guía para replicar la charla)
 
-**Localizar archivos sospechosos:**
-
-```bash
-find ~ -type f -printf '%T@ %p\n' | sort -n | tail -n 20
-```
-
-- Encontrado `/home/azureuser/.npl`.
-- Encontrado `/home/azureuser/capture.pcap`.
-
-**Buscar en directorios de sistema/configuración:**
-
-```bash
-find ~/.config ~/.vscode ~/.local /tmp -type f -printf '%T@ %p\n' | sort -n | tail -n 30
-```
-
-- No se encontraron mecanismos de persistencia inesperados.
-
-**Analizar tráfico de red:**
-
-```bash
-tshark -r capture.pcap -Y 'frame.time_relative < 795.45' -T fields -e ip.dst | sort | uniq -c | sort -nr
-```
-
-- Tráfico predominante hacia `38.92.47.118`, confirmado como C2.
-
-**Extraer flujos sospechosos:**
-
-```bash
-tshark -r capture.pcap -Y 'ip.addr == 38.92.47.118 || ip.addr == 165.140.86.173 || ip.addr == 103.70.115.38' \
-  -T fields -e frame.time -e ip.src -e ip.dst -e tcp.port -e udp.port -e frame.len -e _ws.col.Info
-```
-
-- Capturadas solicitudes HTTP GET a `/s/bc7f301710f4`.
-- Detectados intentos de conexión SSH desde `103.70.115.38`.
+1. **Llega el señuelo**: contacto de falso recruiter con urgencia y presión por presupuesto.
+2. **Inspección del repositorio recibido**: detección de comportamiento sospechoso en archivos de arranque/configuración.
+3. **Reconstrucción de la lógica C2**: recuperación del flujo de construcción de URL y descarga de payload.
+4. **Observación en ejecución de forma segura**: captura de trazas de ficheros, procesos y red en VM aislada.
+5. **Decodificación por etapas**: eliminación de capas Base85/XOR/compresión.
+6. **Automatización recursiva**: escalado del desempaquetado a múltiples capas.
+7. **Análisis del payload final**: objetivo, impacto y evidencias listas para reporte.
 
 ---
 
-## 🧐 Direcciones IP Involucradas
+## 🧪 Resumen de labs (qué contiene cada uno)
 
-| IP             | Rol                                         | Observaciones                                                |
-| -------------- | ------------------------------------------- | ------------------------------------------------------------ |
-| 38.92.47.118   | Servidor C2 Principal                       | Responde en el puerto 1244. Sirve payload en `GET /s/bc7f301710f4`. |
-| 165.140.86.173 | Segundo C2 / Servidor de Beaconing (sospechoso) | Conexiones POST detectadas, posible servidor de respaldo.    |
-| 103.70.115.38  | Intento de SSH / Exfiltración                | Intentó handshake SSH hacia la VM forense.                   |
+### Lab 01 — Triage inicial del script
+Ruta: [`labs/lab-01-initial-script/`](labs/lab-01-initial-script/)
+
+- Formatea y revisa JavaScript sospechoso.
+- Foco: legibilidad e indicadores estáticos iniciales.
+- Script principal: `scripts/01-beautify.sh`.
+
+### Lab 02 — Reconstrucción de URL/C2
+Ruta: [`labs/lab-02-url-reconstruction/`](labs/lab-02-url-reconstruction/)
+
+- Reconstruye la lógica ofuscada de URLs y endpoints de payload.
+- Extrae partes de la URL C2 y valida el ensamblado.
+- Scripts principales: `reconstruct_payload_url_logic.py`, `extract_c2_url_parts.py`.
+
+### Lab 03 — Observación en runtime
+Ruta: [`labs/lab-03-runtime-observation/`](labs/lab-03-runtime-observation/)
+
+- Monitoriza filesystem, procesos y tráfico durante ejecución controlada.
+- Genera evidencia reproducible de comportamiento en vivo.
+- Scripts principales: `capture-traffic.sh`, `fs-watch.sh`, `ps-watch.sh`.
+
+### Lab 04 — Decodificación del payload `.npl`
+Ruta: [`labs/lab-04/`](labs/lab-04/)
+
+- Decodifica el artefacto `.npl` de primera etapa (pipeline Base85 + XOR).
+- Produce la siguiente capa legible para continuar análisis.
+- Script principal: `decode_payload_1.py`.
+
+### Lab 05 — Desempaquetado recursivo manual
+Ruta: [`labs/lab-05/`](labs/lab-05/)
+
+- Disecciona manualmente capas de loader para entender la técnica.
+- Separa análisis de extracción por etapa.
+- Scripts principales: `analyze_layer1_payload.py`, `extract_layer1_payload.py`, `extract_layer2_payload.py`.
+
+### Lab 06 — Decodificación recursiva automatizada
+Ruta: [`labs/lab-06/`](labs/lab-06/)
+
+- Automatiza la extracción recursiva de múltiples capas empaquetadas.
+- Construye la cadena completa de artefactos decodificados para correlación temporal.
+- Script principal: `recursive_decoder.py`.
+
+### Lab 07 — Análisis del payload final
+Ruta: [`labs/lab-07/`](labs/lab-07/)
+
+- Revisa el comportamiento final del payload y su intención operativa.
+- Foco: extracción de IOCs, narrativa de amenaza y evidencia para reporte.
+- Ficheros principales: `final_payload_distilled.py`, `input/final_payload.py`.
 
 ---
 
-## 🔎 Notas Técnicas
+## ✅ Notas de ejecución segura
 
-- El archivo `.npl` fue **generado localmente** por código JavaScript ofuscado.
-- La infraestructura C2 proporcionó un **payload secundario** distinto pero relacionado al `.npl` local.
-- Durante la infección se contactaron múltiples servidores C2.
+- La mayoría de labs son seguros de ejecutar en un entorno estándar con Python 3 (Linux/macOS/Windows).
+- Lab 01 requiere Node.js/npm (`npx js-beautify`).
+- Lab 03 demuestra la utilización de herramientas de sistema como `tshark` e `inotifywait`, no es necesario hacerlo a no ser que quieras ejecutarlo por ti mismo y dejarte infectar. Si lo haces, aisla bien el entorno y ten cuidado.
 
-Los scripts forenses (`tools/forensic_scripts/`) permiten **reproducir la decodificación** dentro de un contenedor Docker.
+El objetivo de este repositorio es aprendizaje defensivo, reproducibilidad y entrenamiento en respuesta a incidentes.
 
 ---
 
-## 📢 Destinatarios para Escalado de Denuncia
+## 🌐 Comunidad, colaboración y continuidad
 
-Este material respalda la escalada a:
+Si este trabajo te aporta valor:
 
-- INCIBE, Guardia Civil, Policía Nacional Española
-- Policía Nacional de Colombia
+- ⭐ Dale star al repositorio y compártelo con tus equipos de seguridad/desarrollo.
+- 👍 Apoya próximas publicaciones y nuevos vídeos técnicos.
+- 🤝 Escríbeme si quieres colaborar en talleres de threat hunting o simulación de incidentes.
+
+También he intentado involucrar y notificar a instituciones y equipos relevantes, y agradezco colaboración/respuesta de:
+
+- INCIBE
+- Policía Nacional (unidades de cibercrimen)
+- Guardia Civil (unidades de cibercrimen)
 - LinkedIn Trust & Safety
-- Atlassian Bitbucket Abuse
-- Proveedores de hosting de las IPs C2
+- Equipos de abuso de plataforma e infraestructura
+
+Canales del autor:
+
+- Web: [jgcarmona.com](https://jgcarmona.com)
+- YouTube: [@juangcarmona](https://www.youtube.com/@juangcarmona)
 
 ---
 
-> "En una era de IA e ingeniería social, cazar a los cazadores ya no es opcional: es cuestión de supervivencia."
+> "En una era de IA e ingeniería social, cazar a los cazadores ya no es opcional, es cuestión de supervivencia."

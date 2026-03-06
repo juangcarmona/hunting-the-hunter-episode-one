@@ -2,7 +2,7 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "01 URL Reconstruction...",
+      "name": "02a URL",
       "type": "debugpy",
       "request": "launch",
       "program": "${workspaceFolder}/labs/lab-02-url-reconstruction/reconstruct_payload_url_logic.py",
@@ -10,7 +10,7 @@
       "justMyCode": true
     },
     {
-      "name": "02 Extract C2 URLs",
+      "name": "02b URLs",
       "type": "debugpy",
       "request": "launch",
       "program": "${workspaceFolder}/labs/lab-02-url-reconstruction/extract_c2_url_parts.py",
@@ -26,7 +26,7 @@
       "justMyCode": true
     },
     {
-      "name": "04 Analyze Layer 1",
+      "name": "Analyze l1",
       "type": "debugpy",
       "request": "launch",
       "program": "${workspaceFolder}/labs/lab-05/analyze_layer1_payload.py",

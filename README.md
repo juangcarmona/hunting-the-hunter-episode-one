@@ -1,114 +1,130 @@
 # Hunting the Hunter Episode One 🕵️‍♂️
 
-This repository contains the full forensic dossier and technical breakdown of a malware campaign detected in April 2025, disguised as a fake job offer from someone impersonating a Wov Labs representative.
+Presented at **RootedCON Madrid** (AI&SEC track), March 5, 2026.
+This repository is the practical and educational breakdown behind that talk: how a fake hiring flow led to a malicious repo, and how to investigate it safely, step by step.
+
+![RootedCON 2026 Presentation](assets/rooted.png)
 
 🔗 [Versión en Español](README_ES.md)
 
 ---
 
-## 🎯 Context
+## 🎯 Why this repository exists
 
-As developers, we are increasingly valuable targets.
-We handle secrets, we have privileged access to production environments, source code, critical databases, and cloud infrastructure.
-We are not only builders, but potential gateways.
-
-This attack proves how far malicious actors are willing to go, building convincing fake profiles, offering "dream jobs," and using sophisticated technical bait to compromise engineers.
+As developers, we are high-value targets: we handle secrets, infrastructure access, production credentials, and source code. This project documents a real threat-hunting journey so other engineers can reproduce the investigation process in a controlled and safe way.
 
 ---
 
-## 📢 The Attack Flow
+## 📚 What you will find here
 
-1. **Initial Contact**: A LinkedIn message from "Elian Pérez" offering a lucrative technical manager role.
-2. **Social Engineering**: Creation of urgency with \$3M budget claims, MVP timelines, and senior hiring needs.
-3. **Malicious Repository**: A Bitbucket repo link disguised as a project codebase.
-4. **Payload Trigger**: Obfuscated code inside `next.config.js` designed to generate a `.npl` file and initiate C2 communications.
+- `boobytrapped_repo/`: snapshot of the suspicious project used during the investigation.
+- `conversation/`: LinkedIn transcript and social-engineering context.
+- `labs/`: the investigation split into 7 practical labs.
+- `pcap_logs/`: network captures and traffic artifacts.
+- `assets/screenshots/`: timeline screenshots (`conv_001.png` to `conv_004.png`, VM captures).
 
-📄 **Conversation Details**:
-- **Key moments** are captured as screenshots in [`assets/screenshots/`](assets/screenshots/) (`conv_001.png` to `conv_004.png`).
-- **The full conversation transcript** is available in [`conversation/linkedin_chat_with_elian.md`](conversation/linkedin_chat_with_elian.md).
-
----
-
-## 📀 Repository Structure
-
-- `boobytrapped_repo/`: Full snapshot of the malicious Bitbucket repository.
-- `conversation/`: Full transcript of the LinkedIn conversation.
-- `manual_logs/`: CLI command outputs during forensic session (`find`, `tshark`, etc.).
-- `pcap_logs/`: Captured network traffic (`capture.pcap`).
-- `assets/screenshots/`: Screenshots documenting conversation and VM behavior.
-- `tools/forensic_scripts/`: Python scripts and a Docker forensic environment.
+📄 Key references:
+- Conversation screenshots: [`assets/screenshots/`](assets/screenshots/)
+- Full transcript: [`conversation/linkedin_chat_with_elian.md`](conversation/linkedin_chat_with_elian.md)
 
 ---
 
-## 📈 Manual Logs Analysis
+## 🧭 Story in 7 steps (talk replication guide)
 
-**Locate suspicious files:**
-
-```bash
-find ~ -type f -printf '%T@ %p\n' | sort -n | tail -n 20
-```
-
-- Found `/home/azureuser/.npl`.
-- Found `/home/azureuser/capture.pcap`.
-
-**Search config/system directories:**
-
-```bash
-find ~/.config ~/.vscode ~/.local /tmp -type f -printf '%T@ %p\n' | sort -n | tail -n 30
-```
-
-- No unexpected persistence mechanisms found.
-
-**Analyze network traffic:**
-
-```bash
-tshark -r capture.pcap -Y 'frame.time_relative < 795.45' -T fields -e ip.dst | sort | uniq -c | sort -nr
-```
-
-- Major traffic with destination `38.92.47.118`, confirmed C2.
-
-**Extract suspicious flows:**
-
-```bash
-tshark -r capture.pcap -Y 'ip.addr == 38.92.47.118 || ip.addr == 165.140.86.173 || ip.addr == 103.70.115.38' \
-  -T fields -e frame.time -e ip.src -e ip.dst -e tcp.port -e udp.port -e frame.len -e _ws.col.Info
-```
-
-- Captured HTTP GET requests to `/s/bc7f301710f4`.
-- Detected SSH connection attempts from `103.70.115.38`.
+1. **Receive the lure**: fake recruiter message with urgency and budget pressure.
+2. **Inspect the supplied repo**: identify suspicious behavior in configuration/bootstrapping files.
+3. **Reconstruct C2 logic**: recover URL-building and payload retrieval flow.
+4. **Observe runtime safely**: capture file/process/network traces in an isolated VM.
+5. **Decode staged payloads**: peel back Base85/XOR/compression layers.
+6. **Automate recursive decoding**: scale the unpacking process across many layers.
+7. **Analyze final behavior**: understand objective, impact, and reporting evidence.
 
 ---
 
-## 🧐 Involved IP Addresses
+## 🧪 Labs overview (what each lab contains)
 
-| IP Address     | Role                                        | Observations                                                    |
-| -------------- | ------------------------------------------- | --------------------------------------------------------------- |
-| 38.92.47.118   | Main C2 Server                              | Responds on port 1244. Serves payload on `GET /s/bc7f301710f4`. |
-| 165.140.86.173 | Secondary C2 / Beaconing Server (suspected) | POST connections, possible fallback server.                     |
-| 103.70.115.38  | SSH Attempt / Exfiltration Attempt          | Attempted SSH handshake to the forensic VM.                     |
+### Lab 01 — Initial script triage
+Path: [`labs/lab-01-initial-script/`](labs/lab-01-initial-script/)
+
+- Beautifies and reviews suspicious JavaScript.
+- Focus: readability and first static indicators.
+- Main helper: `scripts/01-beautify.sh`.
+
+### Lab 02 — URL/C2 reconstruction
+Path: [`labs/lab-02-url-reconstruction/`](labs/lab-02-url-reconstruction/)
+
+- Reconstructs obfuscated URL logic and payload endpoint generation.
+- Extracts C2 URL parts and validates assembly.
+- Main scripts: `reconstruct_payload_url_logic.py`, `extract_c2_url_parts.py`.
+
+### Lab 03 — Runtime observation
+Path: [`labs/lab-03-runtime-observation/`](labs/lab-03-runtime-observation/)
+
+- Watches filesystem, process list, and network activity during controlled execution.
+- Produces reproducible runtime evidence.
+- Main scripts: `capture-traffic.sh`, `fs-watch.sh`, `ps-watch.sh`.
+
+### Lab 04 — `.npl` payload decoding
+Path: [`labs/lab-04/`](labs/lab-04/)
+
+- Decodes first-stage `.npl` artifact (Base85 + XOR pipeline).
+- Outputs the next readable layer for further analysis.
+- Main script: `decode_payload_1.py`.
+
+### Lab 05 — Manual recursive unpacking
+Path: [`labs/lab-05/`](labs/lab-05/)
+
+- Dissects loader layers manually to understand the technique.
+- Separates analysis from extraction per layer.
+- Main scripts: `analyze_layer1_payload.py`, `extract_layer1_payload.py`, `extract_layer2_payload.py`.
+
+### Lab 06 — Automated recursive decoding
+Path: [`labs/lab-06/`](labs/lab-06/)
+
+- Automates recursive extraction over many packed layers.
+- Builds a full chain of decoded artifacts for timeline correlation.
+- Main script: `recursive_decoder.py`.
+
+### Lab 07 — Final payload analysis
+Path: [`labs/lab-07/`](labs/lab-07/)
+
+- Reviews distilled final payload behavior and operational intent.
+- Focus: IOC extraction, threat narrative, and reporting-ready evidence.
+- Main files: `final_payload_distilled.py`, `input/final_payload.py`.
 
 ---
 
-## 🔎 Technical Notes
+## ✅ Safe execution notes
 
-- `.npl` file was **generated locally** by obfuscated JavaScript code.
-- C2 infrastructure provided a **secondary payload** different but related to the local `.npl`.
-- Multiple C2 servers were contacted during the infection timeline.
+- Most labs are safe to run in a standard Python 3 environment (Linux/macOS/Windows).
+- Lab 01 requires Node.js/npm (`npx js-beautify`).
+- Lab 03 demonstrates how I used host tooling like `tshark` and `inotifywait` but those are not required unless you want to run it by your own, and at your own risk.
 
-Forensic scripts (`tools/forensic_scripts/`) allow anyone to **reproduce decoding** inside a Docker sandbox.
+The objective of this repository is defensive learning, reproducibility, and incident response training.
 
 ---
 
-## 📢 Reporting and Escalation Targets
+## 🌐 Community, collaboration, and reporting momentum
 
-This material supports escalation to:
+If this work helps you:
 
-- INCIBE, Guardia Civil, Policía Nacional Española
-- Policía Nacional de Colombia
+- ⭐ Star the repository and share it with your security/developer teams.
+- 👍 Like and support the project updates and upcoming writeups/videos.
+- 🤝 Reach out if you want to collaborate on threat-hunting workshops or incident simulation.
+
+I have also tried to involve and notify relevant institutions and teams, and I welcome collaboration/feedback from:
+
+- INCIBE
+- Policía Nacional (cybercrime divisions)
+- Guardia Civil (cybercrime divisions)
 - LinkedIn Trust & Safety
-- Atlassian Bitbucket Abuse
-- Hosting providers of C2 IPs
+- Platform abuse and infrastructure response teams
+
+Author channels:
+
+- Website: [jgcarmona.com](https://jgcarmona.com)
+- YouTube: [@juangcarmona](https://www.youtube.com/@juangcarmona)
 
 ---
 
-> "In an age of AI and social engineering, hunting the hunters is no longer optional — it's survival."
+> "In an age of AI and social engineering, hunting the hunters is no longer optional, it's survival."
